@@ -1,5 +1,12 @@
 import React from "react";
-import { Navbar, Container, NavDropdown, Nav, Button } from "react-bootstrap";
+import {
+  Navbar,
+  Container,
+  NavDropdown,
+  Nav,
+  Button,
+  Badge,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { BlockchainService } from "../../services/blockchainService";
 import CreateWalletModal from "./CreateWalletModal";
@@ -30,7 +37,10 @@ const MyNavbar = ({ id, setId, pendingTransactions }) => {
                     to="/pending-transaction"
                     variant="outline-light"
                   >
-                    Pending transactions ({pendingTransactions.length})
+                    Pending transactions{" "}
+                    <Badge bg="light" text="dark">
+                      {pendingTransactions.length}
+                    </Badge>
                   </Button>
                 </Nav>
               )}

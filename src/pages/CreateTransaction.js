@@ -1,19 +1,26 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { Transaction } from "../classes/blockchainClasses";
 import { BlockchainService } from "../services/blockchainService";
 const CreateTransaction = ({ setPendingTransactions }) => {
+  const navigate = useNavigate();
   const [toAddress, setToAddress] = useState("");
   const [amount, setAmount] = useState(0);
   const createTransaction = () => {
-    const tx = new Transaction(
-      BlockchainService.getWalletKeys(0).publicKey,
-      toAddress,
-      amount
-    );
-    tx.signTransaction(BlockchainService.getWalletKeys(0).keyObj);
-    BlockchainService.addTransaction(tx);
-    setPendingTransactions([...BlockchainService.getPendingTransactions()]);
+    try {
+      const tx = new Transaction(
+        BlockchainService.getWalletKeys(0).publicKey,
+        toAddress,
+        parseInt(amount)
+      );
+      tx.signTransaction(BlockchainService.getWalletKeys(0).keyObj);
+      BlockchainService.addTransaction(tx);
+      setPendingTransactions([...BlockchainService.getPendingTransactions()]);
+      navigate("/");
+    } catch (e) {
+      alert(e);
+    }
   };
   return (
     <>

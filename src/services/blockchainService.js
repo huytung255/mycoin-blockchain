@@ -11,7 +11,7 @@ export class BlockchainService {
     //this.generateWalletKeys();
   }
 
-  minePendingTransactions() {
+  static minePendingTransactions() {
     this.blockchainInstance.minePendingTransactions(
       this.walletKeys[0].publicKey
     );

@@ -4,7 +4,7 @@ import { BlockchainService } from "../services/blockchainService";
 const Home = () => {
   const [blocks, setBlocks] = useState();
   useEffect(() => {
-    setBlocks(BlockchainService.getBlocks());
+    setBlocks({ ...BlockchainService.getBlocks() });
   }, []);
   useEffect(() => {
     console.log(blocks);
@@ -12,19 +12,23 @@ const Home = () => {
   return (
     <>
       <p className="fs-1">Blocks on chain</p>
-      {blocks &&
-        blocks.chain.map((b, i) => {
-          const { hash, previousHash, nonce, timestamp } = b;
-          return (
-            <Block
-              key={i}
-              hash={hash}
-              previousHash={previousHash}
-              nonce={nonce}
-              timestamp={timestamp}
-            />
-          );
-        })}
+      <div className="d-flex">
+        {blocks &&
+          blocks.chain.map((b, i) => {
+            const { hash, previousHash, nonce, timestamp } = b;
+            return (
+              <div key={i} className="p-1">
+                <Block
+                  index={i + 1}
+                  hash={hash}
+                  previousHash={previousHash}
+                  nonce={nonce}
+                  timestamp={timestamp}
+                />
+              </div>
+            );
+          })}
+      </div>
     </>
   );
 };

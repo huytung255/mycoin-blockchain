@@ -1,12 +1,16 @@
 import React from "react";
 import { Card, ListGroup, ListGroupItem } from "react-bootstrap";
-const Block = ({ hash, previousHash, nonce, timestamp }) => {
+const Block = ({ index, hash, previousHash, nonce, timestamp }) => {
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Body>
-        <Card.Title>Block 1</Card.Title>
+        <Card.Title>Block {index}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
-          {previousHash == "0" && "Genesis block"}
+          {previousHash == "0" ? (
+            "Genesis block"
+          ) : (
+            <span style={{ opacity: 0 }}>placeholder</span>
+          )}
         </Card.Subtitle>
       </Card.Body>
       <ListGroup className="list-group-flush">
@@ -27,7 +31,9 @@ const Block = ({ hash, previousHash, nonce, timestamp }) => {
         <ListGroupItem className="text-truncate">
           Timestamp
           <br />
-          <span className="text-muted">{timestamp}</span>
+          <span className="text-muted">
+            {new Date(timestamp).toLocaleString()}
+          </span>
         </ListGroupItem>
       </ListGroup>
     </Card>

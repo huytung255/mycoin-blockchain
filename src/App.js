@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Blockchain } from "./classes/blockchainClasses";
 import CreateTransaction from "./pages/CreateTransaction";
 import { BlockchainService } from "./services/blockchainService";
+import PendingTransactions from "./pages/PendingTransactions";
 function App() {
   const [id, setId] = useState(null);
   const [pendingTransactions, setPendingTransactions] = useState(
@@ -30,6 +31,15 @@ function App() {
             path="/create-transaction"
             element={
               <CreateTransaction
+                setPendingTransactions={setPendingTransactions}
+              />
+            }
+          />
+          <Route
+            path="/pending-transaction"
+            element={
+              <PendingTransactions
+                pendingTransactions={pendingTransactions}
                 setPendingTransactions={setPendingTransactions}
               />
             }

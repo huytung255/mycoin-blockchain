@@ -149,7 +149,7 @@ class Blockchain {
    * @returns {Block}
    */
   createGenesisBlock() {
-    return new Block(Date.parse("2017-01-01"), [], "0");
+    return new Block(Date.parse("2022-01-01"), [], "0");
   }
 
   /**
@@ -199,30 +199,30 @@ class Blockchain {
    */
   addTransaction(transaction) {
     if (!transaction.fromAddress || !transaction.toAddress) {
-      alert("Transaction must include from and to address");
-      return;
-      //throw new Error("Transaction must include from and to address");
+      // alert("Transaction must include from and to address");
+      // return;
+      throw new Error("Transaction must include from and to address");
     }
 
     // Verify the transactiion
     if (!transaction.isValid()) {
-      alert("Cannot add invalid transaction to chain");
-      return;
-      //throw new Error("Cannot add invalid transaction to chain");
+      // alert("Cannot add invalid transaction to chain");
+      // return;
+      throw new Error("Cannot add invalid transaction to chain");
     }
 
     if (transaction.amount <= 0) {
-      alert("Transaction amount should be higher than 0");
-      return;
-      //throw new Error("Transaction amount should be higher than 0");
+      // alert("Transaction amount should be higher than 0");
+      // return;
+      throw new Error("Transaction amount should be higher than 0");
     }
 
     // Making sure that the amount sent is not greater than existing balance
     const walletBalance = this.getBalanceOfAddress(transaction.fromAddress);
     if (walletBalance < transaction.amount) {
-      alert("Not enough balance");
-      //return;
-      //throw new Error("Not enough balance");
+      // alert("Not enough balance");
+      // return;
+      throw new Error("Not enough balance");
     }
 
     // Get all other pending transactions for the "from" wallet
@@ -240,6 +240,10 @@ class Blockchain {
 
       const totalAmount = totalPendingAmount + transaction.amount;
       if (totalAmount > walletBalance) {
+        // alert(
+        //   "Pending transactions for this wallet is higher than its balance."
+        // );
+        // return;
         throw new Error(
           "Pending transactions for this wallet is higher than its balance."
         );
@@ -257,7 +261,7 @@ class Blockchain {
    * @returns {number} The balance of the wallet
    */
   getBalanceOfAddress(address) {
-    let balance = 0;
+    let balance = 100;
 
     for (const block of this.chain) {
       for (const trans of block.transactions) {
