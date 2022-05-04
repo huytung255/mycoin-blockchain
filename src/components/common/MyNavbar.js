@@ -10,6 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import { BlockchainService } from "../../services/blockchainService";
 import CreateWalletModal from "./CreateWalletModal";
+import WalletModal from "./WalletModal";
 const MyNavbar = ({ id, setId, pendingTransactions }) => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -28,6 +29,11 @@ const MyNavbar = ({ id, setId, pendingTransactions }) => {
                   variant="outline-light"
                 >
                   Create a transaction
+                </Button>
+              </Nav>
+              <Nav className="ms-1">
+                <Button as={Link} to="/wallet-details" variant="outline-light">
+                  Wallet's details
                 </Button>
               </Nav>
               {pendingTransactions.length !== 0 && (

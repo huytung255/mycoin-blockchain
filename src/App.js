@@ -9,6 +9,7 @@ import { Blockchain } from "./classes/blockchainClasses";
 import CreateTransaction from "./pages/CreateTransaction";
 import { BlockchainService } from "./services/blockchainService";
 import PendingTransactions from "./pages/PendingTransactions";
+import WalletDetails from "./pages/WalletDetails";
 function App() {
   const [id, setId] = useState(null);
   const [pendingTransactions, setPendingTransactions] = useState(
@@ -44,6 +45,7 @@ function App() {
               />
             }
           />
+          <Route path="/wallet-details" element={<WalletDetails id={id} />} />
         </Routes>
       </Container>
     </BrowserRouter>

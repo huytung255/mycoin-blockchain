@@ -48,4 +48,7 @@ export class BlockchainService {
   static getWalletKeys(i) {
     return this.walletKeys[i];
   }
+  static getBalanceOfAddress(address) {
+    return this.blockchainInstance.getBalanceOfAddress(address);
+  }
 }
