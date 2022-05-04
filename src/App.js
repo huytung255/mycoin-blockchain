@@ -6,18 +6,20 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import { useState } from "react";
 import { Blockchain } from "./classes/blockchainClasses";
+import CreateTransaction from "./pages/CreateTransaction";
 function App() {
+  const [id, setId] = useState();
+
   return (
-    <>
-      <MyNavbar />
+    <BrowserRouter>
+      <MyNavbar id={id} />
       <Container>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-          </Routes>
-        </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/create-transaction" element={<CreateTransaction />} />
+        </Routes>
       </Container>
-    </>
+    </BrowserRouter>
   );
 }
 
