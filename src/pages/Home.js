@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Block from "../components/Home/Block";
+import SelectedBlockTransaction from "../components/Home/SelectedBlockTransaction";
 import { BlockchainService } from "../services/blockchainService";
 const Home = () => {
   const [blocks, setBlocks] = useState();
+  const [selectedBlock, setSelectedBlock] = useState(0);
   useEffect(() => {
     setBlocks({ ...BlockchainService.getBlocks() });
   }, []);
@@ -17,18 +19,21 @@ const Home = () => {
           blocks.chain.map((b, i) => {
             const { hash, previousHash, nonce, timestamp } = b;
             return (
-              <div key={i} className="p-1">
-                <Block
-                  index={i + 1}
-                  hash={hash}
-                  previousHash={previousHash}
-                  nonce={nonce}
-                  timestamp={timestamp}
-                />
-              </div>
+              <Block
+                key={i}
+                index={i}
+                hash={hash}
+                previousHash={previousHash}
+                nonce={nonce}
+                timestamp={timestamp}
+                isSelected={selectedBlock === i}
+                setSelectedBlock={setSelectedBlock}
+              />
             );
           })}
       </div>
+      <p className="fs-1">Transactions inside selected block</p>
+      <SelectedBlockTransaction selectedBlock={selectedBlock} />
     </>
   );
 };

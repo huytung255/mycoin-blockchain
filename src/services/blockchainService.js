@@ -21,11 +21,12 @@ export class BlockchainService {
     return address === this.walletKeys[0].publicKey;
   }
 
-  static generateWalletKeys() {
+  static generateWalletKeys(name) {
     const ec = EC("secp256k1");
     const key = ec.genKeyPair();
 
     this.walletKeys.push({
+      name: name,
       keyObj: key,
       publicKey: key.getPublic("hex"),
       privateKey: key.getPrivate("hex"),
@@ -50,5 +51,8 @@ export class BlockchainService {
   }
   static getBalanceOfAddress(address) {
     return this.blockchainInstance.getBalanceOfAddress(address);
+  }
+  static getBlockByIndex(i) {
+    return this.blockchainInstance.chain[i];
   }
 }

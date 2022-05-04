@@ -41,7 +41,7 @@ const CreateWalletModal = ({ setId }) => {
             variant="dark"
             onClick={() => {
               setId(0);
-              BlockchainService.generateWalletKeys();
+              BlockchainService.generateWalletKeys(name);
               handleClose();
             }}
             disabled={name.length === 0}

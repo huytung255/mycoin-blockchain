@@ -1,9 +1,22 @@
 import React from "react";
 import { Card, ListGroup, ListGroupItem } from "react-bootstrap";
-const Block = ({ index, hash, previousHash, nonce, timestamp }) => {
+const Block = ({
+  index,
+  hash,
+  previousHash,
+  nonce,
+  timestamp,
+  isSelected,
+  setSelectedBlock,
+}) => {
   return (
-    <Card style={{ width: "18rem" }}>
-      <Card.Body>
+    <Card
+      style={{ width: "18rem" }}
+      className="me-1"
+      border={isSelected ? "primary" : ""}
+      onClick={() => setSelectedBlock(index)}
+    >
+      <Card.Header>
         <Card.Title>Block {index}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
           {previousHash == "0" ? (
@@ -12,7 +25,7 @@ const Block = ({ index, hash, previousHash, nonce, timestamp }) => {
             <span style={{ opacity: 0 }}>placeholder</span>
           )}
         </Card.Subtitle>
-      </Card.Body>
+      </Card.Header>
       <ListGroup className="list-group-flush">
         <ListGroupItem className="text-truncate">
           Hash <br />

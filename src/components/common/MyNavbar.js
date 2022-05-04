@@ -10,7 +10,6 @@ import {
 import { Link } from "react-router-dom";
 import { BlockchainService } from "../../services/blockchainService";
 import CreateWalletModal from "./CreateWalletModal";
-import WalletModal from "./WalletModal";
 const MyNavbar = ({ id, setId, pendingTransactions }) => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
