@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { BlockchainService } from "../../services/blockchainService";
-const CreateWalletModal = (props) => {
+const CreateWalletModal = ({ setId }) => {
   const [modalShow, setModalShow] = useState(false);
   const handleClose = () => setModalShow(false);
   const handleShow = () => setModalShow(true);
@@ -39,7 +39,11 @@ const CreateWalletModal = (props) => {
         <Modal.Footer>
           <Button
             variant="dark"
-            onClick={() => BlockchainService.generateWalletKeys()}
+            onClick={() => {
+              setId(0);
+              BlockchainService.generateWalletKeys();
+              handleClose();
+            }}
             disabled={name.length === 0}
           >
             Create

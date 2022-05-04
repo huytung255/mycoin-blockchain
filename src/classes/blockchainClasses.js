@@ -199,22 +199,30 @@ class Blockchain {
    */
   addTransaction(transaction) {
     if (!transaction.fromAddress || !transaction.toAddress) {
-      throw new Error("Transaction must include from and to address");
+      alert("Transaction must include from and to address");
+      return;
+      //throw new Error("Transaction must include from and to address");
     }
 
     // Verify the transactiion
     if (!transaction.isValid()) {
-      throw new Error("Cannot add invalid transaction to chain");
+      alert("Cannot add invalid transaction to chain");
+      return;
+      //throw new Error("Cannot add invalid transaction to chain");
     }
 
     if (transaction.amount <= 0) {
-      throw new Error("Transaction amount should be higher than 0");
+      alert("Transaction amount should be higher than 0");
+      return;
+      //throw new Error("Transaction amount should be higher than 0");
     }
 
     // Making sure that the amount sent is not greater than existing balance
     const walletBalance = this.getBalanceOfAddress(transaction.fromAddress);
     if (walletBalance < transaction.amount) {
-      throw new Error("Not enough balance");
+      alert("Not enough balance");
+      //return;
+      //throw new Error("Not enough balance");
     }
 
     // Get all other pending transactions for the "from" wallet

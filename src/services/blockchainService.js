@@ -34,18 +34,18 @@ export class BlockchainService {
     console.log(this.walletKeys);
   }
 
-  getPendingTransactions() {
+  static getPendingTransactions() {
     return this.blockchainInstance.pendingTransactions;
   }
 
-  addTransaction(tx) {
+  static addTransaction(tx) {
     this.blockchainInstance.addTransaction(tx);
   }
 
   static getBlocks() {
     return this.blockchainInstance;
   }
-  static getWalletKeys() {
-    return this.walletKeys;
+  static getWalletKeys(i) {
+    return this.walletKeys[i];
   }
 }

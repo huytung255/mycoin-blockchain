@@ -3,7 +3,7 @@ import { Navbar, Container, NavDropdown, Nav, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { BlockchainService } from "../../services/blockchainService";
 import CreateWalletModal from "./CreateWalletModal";
-const MyNavbar = ({ id }) => {
+const MyNavbar = ({ id, setId, pendingTransactions }) => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
@@ -12,10 +12,9 @@ const MyNavbar = ({ id }) => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          {id ? (
+          {id !== null ? (
             <>
-              <Nav className="ms-auto"></Nav>
-              <Nav className="ms-1">
+              <Nav className="ms-auto">
                 <Button
                   as={Link}
                   to="/create-transaction"
@@ -24,10 +23,21 @@ const MyNavbar = ({ id }) => {
                   Create a transaction
                 </Button>
               </Nav>
+              {pendingTransactions.length !== 0 && (
+                <Nav className="ms-1">
+                  <Button
+                    as={Link}
+                    to="/pending-transaction"
+                    variant="outline-light"
+                  >
+                    Pending transactions ({pendingTransactions.length})
+                  </Button>
+                </Nav>
+              )}
             </>
           ) : (
             <Nav className="ms-auto">
-              <CreateWalletModal />
+              <CreateWalletModal setId={setId} />
             </Nav>
           )}
         </Navbar.Collapse>
