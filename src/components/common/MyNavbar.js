@@ -7,10 +7,15 @@ import {
   Button,
   Badge,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BlockchainService } from "../../services/blockchainService";
 import CreateWalletModal from "./CreateWalletModal";
 const MyNavbar = ({ id, setId, pendingTransactions }) => {
+  const navigate = useNavigate();
+  const handleLogOut = () => {
+    setId(null);
+    navigate("/");
+  };
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
@@ -30,11 +35,6 @@ const MyNavbar = ({ id, setId, pendingTransactions }) => {
                   Create a transaction
                 </Button>
               </Nav>
-              <Nav className="ms-1">
-                <Button as={Link} to="/wallet-details" variant="outline-light">
-                  Wallet's details
-                </Button>
-              </Nav>
               {pendingTransactions.length !== 0 && (
                 <Nav className="ms-1">
                   <Button
@@ -49,6 +49,20 @@ const MyNavbar = ({ id, setId, pendingTransactions }) => {
                   </Button>
                 </Nav>
               )}
+              <Nav className="ms-1">
+                <NavDropdown
+                  menuVariant="dark"
+                  title="Wallet"
+                  id="collasible-nav-dropdown"
+                >
+                  <NavDropdown.Item as={Link} to="/wallet-details">
+                    Details
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={handleLogOut}>
+                    Log out
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
             </>
           ) : (
             <Nav className="ms-auto">

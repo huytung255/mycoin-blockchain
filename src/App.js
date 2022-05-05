@@ -32,6 +32,7 @@ function App() {
             path="/create-transaction"
             element={
               <CreateTransaction
+                id={id}
                 setPendingTransactions={setPendingTransactions}
               />
             }
@@ -40,6 +41,7 @@ function App() {
             path="/pending-transaction"
             element={
               <PendingTransactions
+                id={id}
                 pendingTransactions={pendingTransactions}
                 setPendingTransactions={setPendingTransactions}
               />

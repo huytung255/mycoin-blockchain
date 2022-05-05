@@ -6,6 +6,11 @@ const CreateWalletModal = ({ setId }) => {
   const handleClose = () => setModalShow(false);
   const handleShow = () => setModalShow(true);
   const [name, setName] = useState("");
+  const handleCreate = () => {
+    const index = BlockchainService.generateWalletKeys(name);
+    setId(index);
+    handleClose();
+  };
   return (
     <>
       <Button variant="outline-light" onClick={handleShow}>
@@ -39,11 +44,7 @@ const CreateWalletModal = ({ setId }) => {
         <Modal.Footer>
           <Button
             variant="dark"
-            onClick={() => {
-              setId(0);
-              BlockchainService.generateWalletKeys(name);
-              handleClose();
-            }}
+            onClick={handleCreate}
             disabled={name.length === 0}
           >
             Create

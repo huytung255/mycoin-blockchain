@@ -11,28 +11,34 @@ export class BlockchainService {
     //this.generateWalletKeys();
   }
 
-  static minePendingTransactions() {
+  static minePendingTransactions(index) {
     this.blockchainInstance.minePendingTransactions(
-      this.walletKeys[0].publicKey
+      this.walletKeys[index].publicKey
     );
   }
 
-  addressIsFromCurrentUser(address) {
-    return address === this.walletKeys[0].publicKey;
+  addressIsFromCurrentUser(address, index) {
+    return address === this.walletKeys[index].publicKey;
   }
 
   static generateWalletKeys(name) {
-    const ec = EC("secp256k1");
-    const key = ec.genKeyPair();
+    const foundIndex = this.walletKeys.findIndex(
+      (wallet) => wallet.name === name
+    );
+    if (foundIndex === -1) {
+      const ec = EC("secp256k1");
+      const key = ec.genKeyPair();
 
-    this.walletKeys.push({
-      name: name,
-      keyObj: key,
-      publicKey: key.getPublic("hex"),
-      privateKey: key.getPrivate("hex"),
-    });
-
-    console.log(this.walletKeys);
+      this.walletKeys.push({
+        name: name,
+        keyObj: key,
+        publicKey: key.getPublic("hex"),
+        privateKey: key.getPrivate("hex"),
+      });
+      console.log(this.walletKeys);
+      return this.walletKeys.length - 1;
+    }
+    return foundIndex;
   }
 
   static getPendingTransactions() {

@@ -3,12 +3,13 @@ import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { BlockchainService } from "../services/blockchainService";
 const PendingTransactions = ({
+  id,
   pendingTransactions,
   setPendingTransactions,
 }) => {
   const navigate = useNavigate();
   const handleMining = () => {
-    BlockchainService.minePendingTransactions();
+    BlockchainService.minePendingTransactions(id);
     setPendingTransactions([...BlockchainService.getPendingTransactions()]);
     navigate("/");
   };
