@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { BlockchainService } from "../../services/blockchainService";
-const SelectedBlockTransaction = ({ selectedBlock }) => {
+const SelectedBlockTransaction = ({ address, selectedBlock }) => {
   const [block, setBlock] = useState(BlockchainService.getBlockByIndex(0));
   useEffect(() => {
     setBlock(BlockchainService.getBlockByIndex(selectedBlock));
@@ -27,17 +27,40 @@ const SelectedBlockTransaction = ({ selectedBlock }) => {
                 <td>{i}</td>
                 <td>
                   {tx.fromAddress ? (
-                    <Link to={"/wallet-details/" + tx.fromAddress}>
-                      {tx.fromAddress}
-                    </Link>
+                    tx.fromAddress !== address ? (
+                      <Link to={"/wallet-details/" + tx.fromAddress}>
+                        {tx.fromAddress}
+                      </Link>
+                    ) : (
+                      <>
+                        {tx.fromAddress}
+                        <br />
+                        <span
+                          style={{ fontSize: "12px" }}
+                          className="text-muted"
+                        >
+                          Self
+                        </span>
+                      </>
+                    )
                   ) : (
                     "System"
                   )}
                 </td>
                 <td>
-                  <Link to={"/wallet-details/" + tx.toAddress}>
-                    {tx.toAddress}
-                  </Link>
+                  {tx.toAddress !== address ? (
+                    <Link to={"/wallet-details/" + tx.toAddress}>
+                      {tx.toAddress}
+                    </Link>
+                  ) : (
+                    <>
+                      {tx.toAddress}
+                      <br />
+                      <span style={{ fontSize: "12px" }} className="text-muted">
+                        Self
+                      </span>
+                    </>
+                  )}
                 </td>
                 <td>
                   {tx.fromAddress ? (

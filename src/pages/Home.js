@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Block from "../components/Home/Block";
 import SelectedBlockTransaction from "../components/Home/SelectedBlockTransaction";
 import { BlockchainService } from "../services/blockchainService";
-const Home = () => {
+const Home = ({ address }) => {
   const [blocks, setBlocks] = useState();
   const [selectedBlock, setSelectedBlock] = useState(0);
   useEffect(() => {
@@ -33,7 +33,10 @@ const Home = () => {
           })}
       </div>
       <p className="fs-1">Transactions inside selected block</p>
-      <SelectedBlockTransaction selectedBlock={selectedBlock} />
+      <SelectedBlockTransaction
+        address={address}
+        selectedBlock={selectedBlock}
+      />
     </>
   );
 };

@@ -27,7 +27,7 @@ function App() {
       />
       <Container>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home address={address} />} />
           <Route
             path="/create-transaction"
             element={

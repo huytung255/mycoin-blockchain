@@ -36,14 +36,34 @@ const PendingTransactions = ({
             <tr key={tx.timestamp}>
               <td>{i}</td>
               <td>
-                <Link to={"/wallet-details/" + tx.fromAddress}>
-                  {tx.fromAddress}
-                </Link>
+                {tx.fromAddress !== address ? (
+                  <Link to={"/wallet-details/" + tx.fromAddress}>
+                    {tx.fromAddress}
+                  </Link>
+                ) : (
+                  <>
+                    {tx.fromAddress}
+                    <br />
+                    <span style={{ fontSize: "12px" }} className="text-muted">
+                      Self
+                    </span>
+                  </>
+                )}
               </td>
               <td>
-                <Link to={"/wallet-details/" + tx.toAddress}>
-                  {tx.toAddress}
-                </Link>
+                {tx.toAddress !== address ? (
+                  <Link to={"/wallet-details/" + tx.toAddress}>
+                    {tx.toAddress}
+                  </Link>
+                ) : (
+                  <>
+                    {tx.toAddress}
+                    <br />
+                    <span style={{ fontSize: "12px" }} className="text-muted">
+                      Self
+                    </span>
+                  </>
+                )}
               </td>
               <td>{tx.amount}</td>
               <td>

@@ -59,7 +59,16 @@ const WalletDetails = () => {
                         {tx.fromAddress}
                       </Link>
                     ) : (
-                      tx.fromAddress
+                      <>
+                        {tx.fromAddress}
+                        <br />
+                        <span
+                          style={{ fontSize: "12px" }}
+                          className="text-muted"
+                        >
+                          Self
+                        </span>
+                      </>
                     )
                   ) : (
                     "System"
@@ -71,7 +80,13 @@ const WalletDetails = () => {
                       {tx.toAddress}
                     </Link>
                   ) : (
-                    tx.toAddress
+                    <>
+                      {tx.toAddress}
+                      <br />
+                      <span style={{ fontSize: "12px" }} className="text-muted">
+                        Self
+                      </span>
+                    </>
                   )}
                 </td>
                 <td>
