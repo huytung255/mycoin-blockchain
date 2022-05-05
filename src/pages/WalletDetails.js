@@ -1,27 +1,16 @@
 import React, { useState } from "react";
 import { BlockchainService } from "../services/blockchainService";
 import { Table } from "react-bootstrap";
-import WalletInformationModal from "../components/common/WalletInformationModal";
-const WalletDetails = ({ id }) => {
-  const [modalShow, setModalShow] = useState(false);
-  const [info, setInfo] = useState({});
-  const handleClose = () => setModalShow(false);
-  const handleShow = (address, name) => {
-    setInfo({ address, name });
-    setModalShow(true);
-  };
-  const wallet = BlockchainService.getWalletKeys(id);
+import { Link, useParams } from "react-router-dom";
+const WalletDetails = () => {
+  const { address } = useParams();
+  const wallet = BlockchainService.findWalletByAddress(address);
   const txHistory = BlockchainService.getAllTransactionsForWallet(
     wallet.publicKey
   );
   return (
     <>
-      <p className="fs-1">Your wallet's details</p>
-      <p className="fw-bold">
-        Name:
-        <br />
-        <span className="fw-normal">{wallet.name}</span>
-      </p>
+      <p className="fs-1">Wallet's details</p>
       <p className="fw-bold">
         Address:
         <br />
@@ -65,23 +54,25 @@ const WalletDetails = ({ id }) => {
                 <td>{i}</td>
                 <td>
                   {tx.fromAddress ? (
-                    <a
-                      onClick={() => handleShow(tx.fromAddress, tx.fromName)}
-                      href="#"
-                    >
-                      {tx.fromAddress}
-                    </a>
+                    tx.fromAddress !== address ? (
+                      <Link to={"/wallet-details/" + tx.fromAddress}>
+                        {tx.fromAddress}
+                      </Link>
+                    ) : (
+                      tx.fromAddress
+                    )
                   ) : (
                     "System"
                   )}
                 </td>
                 <td>
-                  <a
-                    onClick={() => handleShow(tx.toAddress, tx.toName)}
-                    href="#"
-                  >
-                    {tx.toAddress}
-                  </a>
+                  {tx.toAddress !== address ? (
+                    <Link to={"/wallet-details/" + tx.toAddress}>
+                      {tx.toAddress}
+                    </Link>
+                  ) : (
+                    tx.toAddress
+                  )}
                 </td>
                 <td>
                   {tx.fromAddress ? (
@@ -108,11 +99,6 @@ const WalletDetails = ({ id }) => {
           </tbody>
         </Table>
       )}
-      <WalletInformationModal
-        show={modalShow}
-        handleClose={handleClose}
-        wallet={info}
-      />
     </>
   );
 };

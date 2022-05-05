@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { BlockchainService } from "../../services/blockchainService";
-const CreateWalletModal = ({ setId }) => {
+const CreateWalletModal = ({ setAddress }) => {
   const [modalShow, setModalShow] = useState(false);
   const handleClose = () => setModalShow(false);
   const handleShow = () => setModalShow(true);
   const [name, setName] = useState("");
   const handleCreate = () => {
-    const index = BlockchainService.generateWalletKeys(name);
-    setId(index);
+    const address = BlockchainService.generateWalletKeys(name);
+    setAddress(address);
     handleClose();
   };
   return (

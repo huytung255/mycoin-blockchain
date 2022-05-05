@@ -1,23 +1,15 @@
 import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import WalletInformationModal from "../components/common/WalletInformationModal";
+import { Link, useNavigate } from "react-router-dom";
 import { BlockchainService } from "../services/blockchainService";
 const PendingTransactions = ({
-  id,
+  address,
   pendingTransactions,
   setPendingTransactions,
 }) => {
-  const [modalShow, setModalShow] = useState(false);
-  const [info, setInfo] = useState({});
-  const handleClose = () => setModalShow(false);
-  const handleShow = (address, name) => {
-    setInfo({ address, name });
-    setModalShow(true);
-  };
   const navigate = useNavigate();
   const handleMining = () => {
-    BlockchainService.minePendingTransactions(id);
+    BlockchainService.minePendingTransactions(address);
     setPendingTransactions([...BlockchainService.getPendingTransactions()]);
     navigate("/");
   };
@@ -44,17 +36,14 @@ const PendingTransactions = ({
             <tr key={tx.timestamp}>
               <td>{i}</td>
               <td>
-                <a
-                  onClick={() => handleShow(tx.fromAddress, tx.fromName)}
-                  href="#"
-                >
+                <Link to={"/wallet-details/" + tx.fromAddress}>
                   {tx.fromAddress}
-                </a>
+                </Link>
               </td>
               <td>
-                <a onClick={() => handleShow(tx.toAddress, tx.toName)} href="#">
+                <Link to={"/wallet-details/" + tx.toAddress}>
                   {tx.toAddress}
-                </a>
+                </Link>
               </td>
               <td>{tx.amount}</td>
               <td>
@@ -71,11 +60,6 @@ const PendingTransactions = ({
       <Button variant="dark" onClick={handleMining}>
         Start mining
       </Button>
-      <WalletInformationModal
-        show={modalShow}
-        handleClose={handleClose}
-        wallet={info}
-      />
     </>
   );
 };

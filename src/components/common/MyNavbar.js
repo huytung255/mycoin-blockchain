@@ -10,12 +10,17 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { BlockchainService } from "../../services/blockchainService";
 import CreateWalletModal from "./CreateWalletModal";
-const MyNavbar = ({ id, setId, pendingTransactions }) => {
+const MyNavbar = ({ address, setAddress, pendingTransactions }) => {
   const navigate = useNavigate();
   const handleLogOut = () => {
-    setId(null);
+    setAddress(null);
     navigate("/");
   };
+  let wallet = {};
+  try {
+    wallet = BlockchainService.findWalletByAddress(address);
+  } catch (error) {}
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
@@ -23,8 +28,8 @@ const MyNavbar = ({ id, setId, pendingTransactions }) => {
           MyCoin
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          {id !== null ? (
+        <Navbar.Collapse address="basic-navbar-nav">
+          {address !== null ? (
             <>
               <Nav className="ms-auto">
                 <Button
@@ -53,9 +58,12 @@ const MyNavbar = ({ id, setId, pendingTransactions }) => {
                 <NavDropdown
                   menuVariant="dark"
                   title="Wallet"
-                  id="collasible-nav-dropdown"
+                  address="collasible-nav-dropdown"
                 >
-                  <NavDropdown.Item as={Link} to="/wallet-details">
+                  <NavDropdown.Item
+                    as={Link}
+                    to={"/wallet-details/" + wallet.publicKey}
+                  >
                     Details
                   </NavDropdown.Item>
                   <NavDropdown.Item onClick={handleLogOut}>
@@ -66,7 +74,7 @@ const MyNavbar = ({ id, setId, pendingTransactions }) => {
             </>
           ) : (
             <Nav className="ms-auto">
-              <CreateWalletModal setId={setId} />
+              <CreateWalletModal setAddress={setAddress} />
             </Nav>
           )}
         </Navbar.Collapse>

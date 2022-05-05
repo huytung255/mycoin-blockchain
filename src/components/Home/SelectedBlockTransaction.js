@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { BlockchainService } from "../../services/blockchainService";
-import WalletInformationModal from "../common/WalletInformationModal";
 const SelectedBlockTransaction = ({ selectedBlock }) => {
-  const [modalShow, setModalShow] = useState(false);
-  const [info, setInfo] = useState({});
-  const handleClose = () => setModalShow(false);
-  const handleShow = (address) => {
-    setInfo({ address });
-    setModalShow(true);
-  };
   const [block, setBlock] = useState(BlockchainService.getBlockByIndex(0));
   useEffect(() => {
     setBlock(BlockchainService.getBlockByIndex(selectedBlock));
@@ -34,23 +27,17 @@ const SelectedBlockTransaction = ({ selectedBlock }) => {
                 <td>{i}</td>
                 <td>
                   {tx.fromAddress ? (
-                    <a
-                      onClick={() => handleShow(tx.fromAddress, tx.fromName)}
-                      href="#"
-                    >
+                    <Link to={"/wallet-details/" + tx.fromAddress}>
                       {tx.fromAddress}
-                    </a>
+                    </Link>
                   ) : (
                     "System"
                   )}
                 </td>
                 <td>
-                  <a
-                    onClick={() => handleShow(tx.toAddress, tx.toName)}
-                    href="#"
-                  >
+                  <Link to={"/wallet-details/" + tx.toAddress}>
                     {tx.toAddress}
-                  </a>
+                  </Link>
                 </td>
                 <td>
                   {tx.fromAddress ? (
@@ -77,11 +64,6 @@ const SelectedBlockTransaction = ({ selectedBlock }) => {
             ))}
           </tbody>
         </Table>
-        <WalletInformationModal
-          show={modalShow}
-          handleClose={handleClose}
-          wallet={info}
-        />
       </>
     );
   else return "This block has no transactions.";

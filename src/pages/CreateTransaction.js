@@ -3,7 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Transaction } from "../classes/blockchainClasses";
 import { BlockchainService } from "../services/blockchainService";
-const CreateTransaction = ({ id, setPendingTransactions }) => {
+const CreateTransaction = ({ address, setPendingTransactions }) => {
   const navigate = useNavigate();
   const [toAddress, setToAddress] = useState("");
   const [amount, setAmount] = useState(0);
@@ -11,11 +11,11 @@ const CreateTransaction = ({ id, setPendingTransactions }) => {
     try {
       const to = BlockchainService.findWalletByAddress(toAddress);
       const tx = new Transaction(
-        BlockchainService.getWalletKeys(id).publicKey,
+        BlockchainService.findWalletByAddress(address).publicKey,
         toAddress,
         parseInt(amount)
       );
-      tx.signTransaction(BlockchainService.getWalletKeys(id).keyObj);
+      tx.signTransaction(BlockchainService.findWalletByAddress(address).keyObj);
       BlockchainService.addTransaction(tx);
       setPendingTransactions([...BlockchainService.getPendingTransactions()]);
       navigate("/pending-transaction");
@@ -32,7 +32,7 @@ const CreateTransaction = ({ id, setPendingTransactions }) => {
           <Form.Control
             type="text"
             readOnly
-            value={BlockchainService.getWalletKeys(id).publicKey}
+            value={BlockchainService.findWalletByAddress(address).publicKey}
           />
           <Form.Text className="text-muted">
             This is your wallet address.

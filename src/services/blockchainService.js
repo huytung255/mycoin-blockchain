@@ -11,9 +11,9 @@ export class BlockchainService {
     //this.generateWalletKeys();
   }
 
-  static minePendingTransactions(index) {
+  static minePendingTransactions(address) {
     this.blockchainInstance.minePendingTransactions(
-      this.walletKeys[index].publicKey
+      this.findWalletByAddress(address).publicKey
     );
   }
 
@@ -22,10 +22,8 @@ export class BlockchainService {
   }
 
   static generateWalletKeys(name) {
-    const foundIndex = this.walletKeys.findIndex(
-      (wallet) => wallet.name === name
-    );
-    if (foundIndex === -1) {
+    const found = this.walletKeys.find((wallet) => wallet.name === name);
+    if (!found) {
       const ec = EC("secp256k1");
       const key = ec.genKeyPair();
 
@@ -36,9 +34,9 @@ export class BlockchainService {
         privateKey: key.getPrivate("hex"),
       });
       console.log(this.walletKeys);
-      return this.walletKeys.length - 1;
+      return key.getPublic("hex");
     }
-    return foundIndex;
+    return found.publicKey;
   }
 
   static getPendingTransactions() {
@@ -52,9 +50,7 @@ export class BlockchainService {
   static getBlocks() {
     return this.blockchainInstance;
   }
-  static getWalletKeys(i) {
-    return this.walletKeys[i];
-  }
+
   static getBalanceOfAddress(address) {
     return this.blockchainInstance.getBalanceOfAddress(address);
   }

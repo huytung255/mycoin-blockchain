@@ -11,7 +11,7 @@ import { BlockchainService } from "./services/blockchainService";
 import PendingTransactions from "./pages/PendingTransactions";
 import WalletDetails from "./pages/WalletDetails";
 function App() {
-  const [id, setId] = useState(null);
+  const [address, setAddress] = useState(null);
   const [pendingTransactions, setPendingTransactions] = useState(
     BlockchainService.getPendingTransactions()
   );
@@ -21,8 +21,8 @@ function App() {
   return (
     <BrowserRouter>
       <MyNavbar
-        id={id}
-        setId={setId}
+        address={address}
+        setAddress={setAddress}
         pendingTransactions={pendingTransactions}
       />
       <Container>
@@ -32,7 +32,7 @@ function App() {
             path="/create-transaction"
             element={
               <CreateTransaction
-                id={id}
+                address={address}
                 setPendingTransactions={setPendingTransactions}
               />
             }
@@ -41,13 +41,13 @@ function App() {
             path="/pending-transaction"
             element={
               <PendingTransactions
-                id={id}
+                address={address}
                 pendingTransactions={pendingTransactions}
                 setPendingTransactions={setPendingTransactions}
               />
             }
           />
-          <Route path="/wallet-details" element={<WalletDetails id={id} />} />
+          <Route path="/wallet-details/:address" element={<WalletDetails />} />
         </Routes>
       </Container>
     </BrowserRouter>
