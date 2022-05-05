@@ -6,12 +6,16 @@ const ec = new EC("secp256k1");
 class Transaction {
   /**
    * @param {string} fromAddress
+   * @param {string} fromName
    * @param {string} toAddress
+   * @param {string} toName
    * @param {number} amount
    */
-  constructor(fromAddress, toAddress, amount) {
+  constructor(fromAddress, fromName, toAddress, toName, amount) {
     this.fromAddress = fromAddress;
+    this.fromName = fromName;
     this.toAddress = toAddress;
+    this.toName = toName;
     this.amount = amount;
     this.timestamp = Date.now();
   }
@@ -169,10 +173,12 @@ class Blockchain {
    *
    * @param {string} miningRewardAddress
    */
-  minePendingTransactions(miningRewardAddress) {
+  minePendingTransactions(miningRewardAddress, miningRewardName) {
     const rewardTx = new Transaction(
       null,
+      null,
       miningRewardAddress,
+      miningRewardName,
       this.miningReward
     );
     this.pendingTransactions.push(rewardTx);

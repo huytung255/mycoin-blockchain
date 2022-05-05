@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { BlockchainService } from "../services/blockchainService";
 import { Table } from "react-bootstrap";
+import WalletInformationModal from "../components/common/WalletInformationModal";
 const WalletDetails = ({ id }) => {
+  const [modalShow, setModalShow] = useState(false);
+  const [info, setInfo] = useState({});
+  const handleClose = () => setModalShow(false);
+  const handleShow = (address, name) => {
+    setInfo({ address, name });
+    setModalShow(true);
+  };
   const wallet = BlockchainService.getWalletKeys(id);
   const txHistory = BlockchainService.getAllTransactionsForWallet(
     wallet.publicKey
@@ -55,8 +63,34 @@ const WalletDetails = ({ id }) => {
             {txHistory.map((tx, i) => (
               <tr key={tx.timestamp}>
                 <td>{i}</td>
-                <td>{tx.fromAddress ? tx.fromAddress : "System"}</td>
-                <td>{tx.toAddress}</td>
+                <td>
+                  {tx.fromAddress ? (
+                    <a
+                      onClick={() => handleShow(tx.fromAddress, tx.fromName)}
+                      href="#"
+                    >
+                      {tx.fromName}
+                      <br />
+                      <span style={{ fontSize: "12px" }} className="text-muted">
+                        {tx.fromAddress}
+                      </span>
+                    </a>
+                  ) : (
+                    "System"
+                  )}
+                </td>
+                <td>
+                  <a
+                    onClick={() => handleShow(tx.toAddress, tx.toName)}
+                    href="#"
+                  >
+                    {tx.toName}
+                    <br />
+                    <span style={{ fontSize: "12px" }} className="text-muted">
+                      {tx.toAddress}
+                    </span>
+                  </a>
+                </td>
                 <td>
                   {tx.fromAddress ? (
                     tx.amount
@@ -64,7 +98,9 @@ const WalletDetails = ({ id }) => {
                     <>
                       {tx.amount}
                       <br />
-                      <span className="text-muted">Block reward</span>
+                      <span style={{ fontSize: "12px" }} className="text-muted">
+                        Block reward
+                      </span>
                     </>
                   )}
                 </td>
@@ -80,6 +116,11 @@ const WalletDetails = ({ id }) => {
           </tbody>
         </Table>
       )}
+      <WalletInformationModal
+        show={modalShow}
+        handleClose={handleClose}
+        wallet={info}
+      />
     </>
   );
 };

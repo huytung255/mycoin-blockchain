@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import WalletInformationModal from "../components/common/WalletInformationModal";
 import { BlockchainService } from "../services/blockchainService";
 const PendingTransactions = ({
   id,
   pendingTransactions,
   setPendingTransactions,
 }) => {
+  const [modalShow, setModalShow] = useState(false);
+  const [info, setInfo] = useState({});
+  const handleClose = () => setModalShow(false);
+  const handleShow = (address, name) => {
+    setInfo({ address, name });
+    setModalShow(true);
+  };
   const navigate = useNavigate();
   const handleMining = () => {
     BlockchainService.minePendingTransactions(id);
@@ -35,8 +43,27 @@ const PendingTransactions = ({
           {pendingTransactions.map((tx, i) => (
             <tr key={tx.timestamp}>
               <td>{i}</td>
-              <td>{tx.fromAddress}</td>
-              <td>{tx.toAddress}</td>
+              <td>
+                <a
+                  onClick={() => handleShow(tx.fromAddress, tx.fromName)}
+                  href="#"
+                >
+                  {tx.fromName}
+                  <br />
+                  <span style={{ fontSize: "12px" }} className="text-muted">
+                    {tx.fromAddress}
+                  </span>
+                </a>
+              </td>
+              <td>
+                <a onClick={() => handleShow(tx.toAddress, tx.toName)} href="#">
+                  {tx.toName}
+                  <br />
+                  <span style={{ fontSize: "12px" }} className="text-muted">
+                    {tx.toAddress}
+                  </span>
+                </a>
+              </td>
               <td>{tx.amount}</td>
               <td>
                 {tx.timestamp} <br />
@@ -52,6 +79,11 @@ const PendingTransactions = ({
       <Button variant="dark" onClick={handleMining}>
         Start mining
       </Button>
+      <WalletInformationModal
+        show={modalShow}
+        handleClose={handleClose}
+        wallet={info}
+      />
     </>
   );
 };

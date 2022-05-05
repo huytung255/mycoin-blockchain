@@ -13,7 +13,8 @@ export class BlockchainService {
 
   static minePendingTransactions(index) {
     this.blockchainInstance.minePendingTransactions(
-      this.walletKeys[index].publicKey
+      this.walletKeys[index].publicKey,
+      this.walletKeys[index].name
     );
   }
 
@@ -63,5 +64,12 @@ export class BlockchainService {
   }
   static getAllTransactionsForWallet(address) {
     return this.blockchainInstance.getAllTransactionsForWallet(address);
+  }
+  static findWalletByAddress(address) {
+    const found = this.walletKeys.find(
+      (wallet) => wallet.publicKey === address
+    );
+    if (found) return found;
+    throw Error("Receiver's address doesn't exist.");
   }
 }
