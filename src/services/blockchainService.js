@@ -55,4 +55,7 @@ export class BlockchainService {
   static getBlockByIndex(i) {
     return this.blockchainInstance.chain[i];
   }
+  static getAllTransactionsForWallet(address) {
+    return this.blockchainInstance.getAllTransactionsForWallet(address);
+  }
 }

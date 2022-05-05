@@ -17,7 +17,7 @@ const CreateTransaction = ({ setPendingTransactions }) => {
       tx.signTransaction(BlockchainService.getWalletKeys(0).keyObj);
       BlockchainService.addTransaction(tx);
       setPendingTransactions([...BlockchainService.getPendingTransactions()]);
-      navigate("/");
+      navigate("/pending-transaction");
     } catch (e) {
       alert(e);
     }

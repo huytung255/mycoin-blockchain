@@ -37,7 +37,12 @@ const PendingTransactions = ({
               <td>{tx.fromAddress}</td>
               <td>{tx.toAddress}</td>
               <td>{tx.amount}</td>
-              <td>{tx.timestamp}</td>
+              <td>
+                {tx.timestamp} <br />
+                <span style={{ fontSize: "12px" }} className="text-muted">
+                  {new Date(tx.timestamp).toLocaleString()}
+                </span>
+              </td>
               <td>{tx.isValid() ? "Yes" : "No"}</td>
             </tr>
           ))}

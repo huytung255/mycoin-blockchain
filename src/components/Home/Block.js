@@ -11,8 +11,8 @@ const Block = ({
 }) => {
   return (
     <Card
-      style={{ width: "18rem" }}
-      className="me-1"
+      style={{ width: "18rem", flexShrink: 0 }}
+      className="me-1 mb-1"
       border={isSelected ? "primary" : ""}
       onClick={() => setSelectedBlock(index)}
     >

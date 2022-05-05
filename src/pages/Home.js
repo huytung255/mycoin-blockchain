@@ -14,7 +14,7 @@ const Home = () => {
   return (
     <>
       <p className="fs-1">Blocks on chain</p>
-      <div className="d-flex">
+      <div className="d-flex flex-wrap">
         {blocks &&
           blocks.chain.map((b, i) => {
             const { hash, previousHash, nonce, timestamp } = b;
