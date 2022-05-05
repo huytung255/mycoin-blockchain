@@ -14,7 +14,7 @@ const CreateWalletModal = ({ setAddress }) => {
   return (
     <>
       <Button variant="outline-light" onClick={handleShow}>
-        Create a wallet
+        Create or access a wallet
       </Button>
       <Modal
         show={modalShow}
@@ -26,7 +26,7 @@ const CreateWalletModal = ({ setAddress }) => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Create a wallet
+            Create or access a wallet
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -37,7 +37,10 @@ const CreateWalletModal = ({ setAddress }) => {
                 type="text"
                 onChange={(e) => setName(e.target.value)}
               />
-              <Form.Text className="text-muted">Your wallet's name.</Form.Text>
+              <Form.Text className="text-muted">
+                Your wallet's name. If there is an existing wallet with this
+                name, you will be signed in instead (for demonstration purpose).
+              </Form.Text>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -47,7 +50,7 @@ const CreateWalletModal = ({ setAddress }) => {
             onClick={handleCreate}
             disabled={name.length === 0}
           >
-            Create
+            Create or access
           </Button>
           <Button variant="outline-dark" onClick={handleClose}>
             Close
