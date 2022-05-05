@@ -6,8 +6,8 @@ const SelectedBlockTransaction = ({ selectedBlock }) => {
   const [modalShow, setModalShow] = useState(false);
   const [info, setInfo] = useState({});
   const handleClose = () => setModalShow(false);
-  const handleShow = (address, name) => {
-    setInfo({ address, name });
+  const handleShow = (address) => {
+    setInfo({ address });
     setModalShow(true);
   };
   const [block, setBlock] = useState(BlockchainService.getBlockByIndex(0));
@@ -38,11 +38,7 @@ const SelectedBlockTransaction = ({ selectedBlock }) => {
                       onClick={() => handleShow(tx.fromAddress, tx.fromName)}
                       href="#"
                     >
-                      {tx.fromName}
-                      <br />
-                      <span style={{ fontSize: "12px" }} className="text-muted">
-                        {tx.fromAddress}
-                      </span>
+                      {tx.fromAddress}
                     </a>
                   ) : (
                     "System"
@@ -53,11 +49,7 @@ const SelectedBlockTransaction = ({ selectedBlock }) => {
                     onClick={() => handleShow(tx.toAddress, tx.toName)}
                     href="#"
                   >
-                    {tx.toName}
-                    <br />
-                    <span style={{ fontSize: "12px" }} className="text-muted">
-                      {tx.toAddress}
-                    </span>
+                    {tx.toAddress}
                   </a>
                 </td>
                 <td>

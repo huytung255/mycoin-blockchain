@@ -12,9 +12,7 @@ const CreateTransaction = ({ id, setPendingTransactions }) => {
       const to = BlockchainService.findWalletByAddress(toAddress);
       const tx = new Transaction(
         BlockchainService.getWalletKeys(id).publicKey,
-        BlockchainService.getWalletKeys(id).name,
         toAddress,
-        to.name,
         parseInt(amount)
       );
       tx.signTransaction(BlockchainService.getWalletKeys(id).keyObj);

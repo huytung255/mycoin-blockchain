@@ -13,8 +13,7 @@ export class BlockchainService {
 
   static minePendingTransactions(index) {
     this.blockchainInstance.minePendingTransactions(
-      this.walletKeys[index].publicKey,
-      this.walletKeys[index].name
+      this.walletKeys[index].publicKey
     );
   }
 

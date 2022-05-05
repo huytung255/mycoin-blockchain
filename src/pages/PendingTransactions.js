@@ -48,20 +48,12 @@ const PendingTransactions = ({
                   onClick={() => handleShow(tx.fromAddress, tx.fromName)}
                   href="#"
                 >
-                  {tx.fromName}
-                  <br />
-                  <span style={{ fontSize: "12px" }} className="text-muted">
-                    {tx.fromAddress}
-                  </span>
+                  {tx.fromAddress}
                 </a>
               </td>
               <td>
                 <a onClick={() => handleShow(tx.toAddress, tx.toName)} href="#">
-                  {tx.toName}
-                  <br />
-                  <span style={{ fontSize: "12px" }} className="text-muted">
-                    {tx.toAddress}
-                  </span>
+                  {tx.toAddress}
                 </a>
               </td>
               <td>{tx.amount}</td>
