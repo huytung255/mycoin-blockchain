@@ -66,7 +66,7 @@ const WalletDetails = () => {
                           style={{ fontSize: "12px" }}
                           className="text-muted"
                         >
-                          Self
+                          This wallet
                         </span>
                       </>
                     )
@@ -84,7 +84,7 @@ const WalletDetails = () => {
                       {tx.toAddress}
                       <br />
                       <span style={{ fontSize: "12px" }} className="text-muted">
-                        Self
+                        This wallet
                       </span>
                     </>
                   )}

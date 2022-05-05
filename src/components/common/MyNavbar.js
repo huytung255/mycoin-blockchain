@@ -57,7 +57,7 @@ const MyNavbar = ({ address, setAddress, pendingTransactions }) => {
               <Nav className="ms-1">
                 <NavDropdown
                   menuVariant="dark"
-                  title="Wallet"
+                  title={wallet.name + "'s Wallet"}
                   address="collasible-nav-dropdown"
                 >
                   <NavDropdown.Item
